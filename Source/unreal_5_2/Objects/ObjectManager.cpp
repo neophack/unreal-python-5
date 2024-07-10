@@ -52,7 +52,9 @@ FString UObjectManager::SpawnObject(TSharedPtr<FJsonObject>& JsonData)
             MyMesh->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
             MyMesh->SetCollisionProfileName(TEXT("BlockAll"));
         }
-
+        // add segmentation
+        MyMesh->SetRenderCustomDepth(true);
+        MyMesh->SetCustomDepthStencilValue(ObjectCounter);
         MyMesh->SetupAttachment(SpawnedActor->GetRootComponent());
         MyMesh->RegisterComponent();
 
@@ -75,4 +77,9 @@ FString UObjectManager::DeleteObject(TSharedPtr<FJsonObject>& JsonData)
         }
     }
     return FString("object not found");
+}
+
+FString UObjectManager::AddCamera(TSharedPtr<FJsonObject>& JsonData)
+{
+    return FString("Camera adding...");
 }

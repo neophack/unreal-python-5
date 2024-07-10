@@ -5,6 +5,7 @@
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
 #include "ObjectManager.h"
+#include "CameraManager.h"
 #include "MessageHandler.h"
 #include "MessageType.h"
 #include "TCPServer.generated.h"
@@ -39,6 +40,9 @@ private:
 	bool CheckForConnections();
 	TUniquePtr<FMessageHandler> MessageHandler;
 	UObjectManager* ObjectManager;
+	UCameraManager* CameraManager;
+
+
 	FString ReceiveData();
 
 	// robust type

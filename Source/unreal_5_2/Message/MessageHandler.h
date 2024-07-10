@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "ObjectManager.h"
+#include "CameraManager.h"
 #include "MessageValidator.h"
 #include "MessageType.h"
 
@@ -15,11 +16,13 @@ public:
 	~FMessageHandler();
 
 public:
-	void AddObjectManager(UObjectManager* manager);
+	void AddObjectManager(UObjectManager* Manager);
+	void AddCameraManager(UCameraManager* Manager);
 	Msg ProcessMessage(const FString& Message);
 
 private:
 	UObjectManager* ObjectManager;
+	UCameraManager* CameraManager;
 	FMessageValidator MsgValidator;
 
 	Msg ParseAndDispatch(TSharedPtr<FJsonObject>& JsonObject);

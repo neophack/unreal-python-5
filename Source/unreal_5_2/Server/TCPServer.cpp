@@ -21,10 +21,12 @@ void ATCPServer::BeginPlay()
 {
     Super::BeginPlay();
     ObjectManager = NewObject<UObjectManager>();
+    CameraManager = NewObject<UCameraManager>();
     UWorld* World = GetWorld();
     if (World) {
         ObjectManager->InitializeWorld(GetWorld());
         MessageHandler->AddObjectManager(ObjectManager);
+        MessageHandler->AddCameraManager(CameraManager);
     };
 
     StartTCPListener();

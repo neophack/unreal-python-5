@@ -12,6 +12,7 @@ ASpawnedObject::ASpawnedObject()
 	// Create a root component and attach it to the actor
 	RootComp = CreateDefaultSubobject<USceneComponent>(TEXT("RootComponent"));
 	RootComponent = RootComp;
+
 }
 
 // Called when the game starts or when spawned

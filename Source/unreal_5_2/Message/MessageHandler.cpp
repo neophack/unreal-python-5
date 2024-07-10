@@ -16,6 +16,11 @@ void FMessageHandler::AddObjectManager(UObjectManager* Manager)
     ObjectManager = Manager;
 }
 
+void FMessageHandler::AddCameraManager(UCameraManager* Manager)
+{
+    CameraManager = Manager;
+}
+
 Msg FMessageHandler::ProcessMessage(const FString& Message)
 {
     TSharedPtr<FJsonObject> JsonObject;
@@ -42,6 +47,10 @@ Msg FMessageHandler::ParseAndDispatch(TSharedPtr<FJsonObject>& JsonObject)
     else if (Action == TEXT("delete_object") && MsgValidator.ValidateDeleteObject(JsonObject, message))
     {
         message = ObjectManager->DeleteObject(JsonObject);
+    }
+    else if (Action == TEXT("add_camera"))
+    {
+        message = CameraManager->AddCamera(JsonObject);
     }
     return Msg(TInPlaceType<FString>(), message);
 };
