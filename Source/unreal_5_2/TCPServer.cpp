@@ -31,8 +31,8 @@ void ATCPServer::Tick(float DeltaTime)
     FString ReceivedMessage = ReceiveData();
     if (!ReceivedMessage.IsEmpty()) {
         UE_LOG(LogServer, Log, TEXT("Received from client: %s"), *ReceivedMessage);
-        //FString DispatchMessage = MessageHandler->ProcessMessage(ReceivedMessage);
-        //SendMessage(DispatchMessage);
+        FString DispatchMessage = MessageHandler->ProcessMessage(ReceivedMessage);
+        SendMessage(DispatchMessage);
     }
 }
 

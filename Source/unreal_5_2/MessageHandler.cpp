@@ -11,7 +11,8 @@ FMessageHandler::~FMessageHandler()
 {
 }
 
-TSharedPtr<FJsonObject> ParseMessage(const FString& Message)
+FString FMessageHandler::ProcessMessage(const FString& Message)
 {
-
+	FString message = FString("Hello");
+	return message;
 }

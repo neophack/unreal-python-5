@@ -13,5 +13,6 @@ public:
 	FMessageHandler();
 	~FMessageHandler();
 
-	TSharedPtr<FJsonObject> ParseMessage(const FString& Message);
+public:
+	FString ProcessMessage(const FString& Message);
 };
