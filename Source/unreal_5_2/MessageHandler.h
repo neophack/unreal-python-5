@@ -4,6 +4,7 @@
 
 #include "CoreMinimal.h"
 #include "ObjectManager.h"
+#include "MessageValidator.h"
 
 /**
  * 
@@ -20,8 +21,7 @@ public:
 
 private:
 	UObjectManager* ObjectManager;
+	FMessageValidator MsgValidator;
 
-	bool ValidateJsonData(TSharedPtr<FJsonObject>& JsonData, FString& ErrorMessage);
 	FString ParseAndDispatch(TSharedPtr<FJsonObject>& JsonObject);
-
 };

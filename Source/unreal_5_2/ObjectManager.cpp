@@ -3,9 +3,10 @@
 
 #include "ObjectManager.h"
 
+int32 UObjectManager::ObjectCounter = 1;
+
 UObjectManager::UObjectManager()
 {
-
 };
 
 void UObjectManager::InitializeWorld(UWorld* World)
@@ -15,7 +16,7 @@ void UObjectManager::InitializeWorld(UWorld* World)
 
 FString UObjectManager::SpawnObject(TSharedPtr<FJsonObject>& JsonData)
 {
-    //TODO: Keep track of unique object_id in ObjectDatabase
+    FString ObjectID = FString::Printf(TEXT("%d"), ObjectCounter++);
 
     FVector Location;
     Location.X = JsonData->GetObjectField(TEXT("location"))->GetNumberField(TEXT("x"));
@@ -30,7 +31,6 @@ FString UObjectManager::SpawnObject(TSharedPtr<FJsonObject>& JsonData)
     FActorSpawnParameters SpawnParams;
 
     AActor* SpawnedActor = ThisWorld->SpawnActor<AActor>(AActor::StaticClass(), Location, Rotation, SpawnParams);
-
 
     FString MaterialPath = JsonData->GetStringField(TEXT("material_path"));
     FString MeshPath = JsonData->GetStringField(TEXT("mesh_path"));
@@ -54,9 +54,26 @@ FString UObjectManager::SpawnObject(TSharedPtr<FJsonObject>& JsonData)
             MyMesh->SetCollisionProfileName(TEXT("BlockAll"));
         }
 
-
         MyMesh->SetupAttachment(SpawnedActor->GetRootComponent());
         MyMesh->RegisterComponent();
+
+        ObjectDatabase.Add(ObjectID, SpawnedActor);
     }
-    return FString("success");
+    return ObjectID;
+}
+
+FString UObjectManager::DeleteObject(TSharedPtr<FJsonObject>& JsonData)
+{
+    FString ObjectID = JsonData->GetStringField(TEXT("object_id"));
+    if (ObjectDatabase.Contains(ObjectID))
+    {
+        AActor* ActorToDelete = *ObjectDatabase.Find(ObjectID);
+        if (ActorToDelete)
+        {
+            ActorToDelete->Destroy();
+            ObjectDatabase.Remove(ObjectID);
+            return FString("success");
+        }
+    }
+    return FString("object not found");
 }

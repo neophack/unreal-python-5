@@ -18,7 +18,10 @@ public:
 	UObjectManager();
 	void InitializeWorld(UWorld* World);
 	FString SpawnObject(TSharedPtr<FJsonObject>& JsonData);
+	FString DeleteObject(TSharedPtr<FJsonObject>& JsonData);
 
 private:
 	UWorld* ThisWorld;
+	TMap<FString, AActor*> ObjectDatabase;
+	static int32 ObjectCounter;
 };
