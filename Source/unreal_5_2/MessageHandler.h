@@ -7,9 +7,11 @@
 /**
  * 
  */
-class UNREAL_5_2_API MessageHandler
+class UNREAL_5_2_API FMessageHandler
 {
 public:
-	MessageHandler();
-	~MessageHandler();
+	FMessageHandler();
+	~FMessageHandler();
+
+	TSharedPtr<FJsonObject> ParseMessage(const FString& Message);
 };

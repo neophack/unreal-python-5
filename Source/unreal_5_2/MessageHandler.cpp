@@ -3,10 +3,15 @@
 
 #include "MessageHandler.h"
 
-MessageHandler::MessageHandler()
+FMessageHandler::FMessageHandler()
 {
 }
 
-MessageHandler::~MessageHandler()
+FMessageHandler::~FMessageHandler()
 {
+}
+
+TSharedPtr<FJsonObject> ParseMessage(const FString& Message)
+{
+
 }

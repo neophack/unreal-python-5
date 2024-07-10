@@ -26,7 +26,7 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
-	//virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
+	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
 public:	
 	// Called every frame
@@ -35,9 +35,10 @@ public:
 private:
 	bool StartTCPListener();
 	bool bindSocketSuccess;
-	//bool CheckForConnections();
+	bool CheckForConnections();
+	TUniquePtr<FMessageHandler> MessageHandler;
 
-	//FString ReceiveData();
-	//void SendMessage(const FString& Message);
-	//bool CloseTCPListener();
+	FString ReceiveData();
+	void SendMessage(const FString& Message);
+	bool CloseTCPListener();
 };
