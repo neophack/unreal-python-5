@@ -39,7 +39,8 @@ void ATCPServer::Tick(float DeltaTime)
     FString ReceivedMessage = ReceiveData();
     if (!ReceivedMessage.IsEmpty()) {
         UE_LOG(LogServer, Log, TEXT("Received from client: %s"), *ReceivedMessage);
-        FString DispatchMessage = MessageHandler->ProcessMessage(ReceivedMessage);
+        // TODO: use template<typename T> to send FString or TArray (camera view)
+        Msg DispatchMessage = MessageHandler->ProcessMessage(ReceivedMessage);
         SendMessage(DispatchMessage);
     }
 }
@@ -171,6 +172,51 @@ void ATCPServer::SendMessage(const FString& Message)
     else
     {
         UE_LOG(LogServer, Error, TEXT("No client connected or client disconnected"));
+    }
+}
+
+void ATCPServer::SendImage(const TArray<uint8>& ImageData)
+{
+    if (ClientSocket && ClientSocket->GetConnectionState() == SCS_Connected)
+    {
+        int32 BytesSent = 0;
+        int32 TotalBytesSent = 0;
+        int32 DataSize = ImageData.Num();
+        const uint8* DataPtr = ImageData.GetData();
+
+        while (TotalBytesSent < DataSize)
+        {
+            ClientSocket->Send(DataPtr + TotalBytesSent, DataSize - TotalBytesSent, BytesSent);
+            TotalBytesSent += BytesSent;
+        }
+
+        if (TotalBytesSent == DataSize)
+        {
+            UE_LOG(LogServer, Log, TEXT("Sent binary data to client"));
+        }
+        else
+        {
+            UE_LOG(LogServer, Error, TEXT("Failed to send all data to client"));
+        }
+    }
+    else
+    {
+        UE_LOG(LogServer, Error, TEXT("No client connected or client disconnected"));
+    }
+}
+
+void ATCPServer::SendMessage(const Msg& Message)
+{
+    if (ClientSocket && ClientSocket->GetConnectionState() == SCS_Connected)
+    {
+        if (Message.IsType<FString>())
+        {
+            SendMessage(Message.Get<FString>());
+        }
+        else if (Message.IsType<TArray<uint8>>())
+        {
+            SendImage(Message.Get<TArray<uint8>>());
+        }
     }
 }
 

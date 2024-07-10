@@ -5,10 +5,9 @@
 #include "CoreMinimal.h"
 #include "ObjectManager.h"
 #include "MessageValidator.h"
+#include "MessageType.h"
 
-/**
- * 
- */
+
 class UNREAL_5_2_API FMessageHandler
 {
 public:
@@ -17,11 +16,11 @@ public:
 
 public:
 	void AddObjectManager(UObjectManager* manager);
-	FString ProcessMessage(const FString& Message);
+	Msg ProcessMessage(const FString& Message);
 
 private:
 	UObjectManager* ObjectManager;
 	FMessageValidator MsgValidator;
 
-	FString ParseAndDispatch(TSharedPtr<FJsonObject>& JsonObject);
+	Msg ParseAndDispatch(TSharedPtr<FJsonObject>& JsonObject);
 };

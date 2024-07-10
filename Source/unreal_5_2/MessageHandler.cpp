@@ -11,45 +11,38 @@ FMessageHandler::~FMessageHandler()
 {
 }
 
-FString FMessageHandler::ProcessMessage(const FString& Message)
+void FMessageHandler::AddObjectManager(UObjectManager* Manager)
+{
+    ObjectManager = Manager;
+}
+
+Msg FMessageHandler::ProcessMessage(const FString& Message)
 {
     TSharedPtr<FJsonObject> JsonObject;
     TSharedRef<TJsonReader<>> Reader = TJsonReaderFactory<>::Create(Message);
 
     if (FJsonSerializer::Deserialize(Reader, JsonObject) && JsonObject.IsValid())
     {
-        FString DispatchMessage = ParseAndDispatch(JsonObject);
+        Msg DispatchMessage = ParseAndDispatch(JsonObject);
         return DispatchMessage;
     }
-    return FString("Not a JSON message...");
+    return Msg(TInPlaceType<FString>(), FString(TEXT("Processed: ") + Message));
+    //Msg(FString("Not a JSON message..."));
 }
 
-FString FMessageHandler::ParseAndDispatch(TSharedPtr<FJsonObject>& JsonObject)
+Msg FMessageHandler::ParseAndDispatch(TSharedPtr<FJsonObject>& JsonObject)
 {
     FString Action = JsonObject->GetStringField(TEXT("action"));
     FString message = "Nothing happened";
 
-    if (Action == TEXT("add_object"))
+    if (Action == TEXT("add_object") && MsgValidator.ValidateAddObject(JsonObject, message))
     {
-        if (!MsgValidator.ValidateAddObject(JsonObject, message))
-        {
-            return message;
-        }
         message = ObjectManager->SpawnObject(JsonObject);
     }
-    else if (Action == TEXT("delete_object"))
+    else if (Action == TEXT("delete_object") && MsgValidator.ValidateDeleteObject(JsonObject, message))
     {
-        if (!MsgValidator.ValidateDeleteObject(JsonObject, message))
-        {
-            return message;
-        }
         message = ObjectManager->DeleteObject(JsonObject);
     }
-    // ToDo: More info
-    return message;
+    return Msg(TInPlaceType<FString>(), message);
 };
 
-void FMessageHandler::AddObjectManager(UObjectManager* Manager)
-{
-    ObjectManager = Manager;
-}

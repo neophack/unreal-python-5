@@ -6,6 +6,7 @@
 #include "GameFramework/Actor.h"
 #include "ObjectManager.h"
 #include "MessageHandler.h"
+#include "MessageType.h"
 #include "TCPServer.generated.h"
 
 DECLARE_LOG_CATEGORY_EXTERN(LogServer, Log, All);
@@ -14,8 +15,8 @@ UCLASS()
 class UNREAL_5_2_API ATCPServer : public AActor
 {
 	GENERATED_BODY()
-	
-public:	
+
+public:
 	// Sets default values for this actor's properties
 	ATCPServer();
 	ISocketSubsystem* SocketSubsystem;
@@ -28,7 +29,7 @@ protected:
 	virtual void BeginPlay() override;
 	virtual void EndPlay(const EEndPlayReason::Type EndPlayReason) override;
 
-public:	
+public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
@@ -39,6 +40,13 @@ private:
 	TUniquePtr<FMessageHandler> MessageHandler;
 	UObjectManager* ObjectManager;
 	FString ReceiveData();
+
+	// robust type
+	void SendMessage(const Msg& Message);
+	// string type
 	void SendMessage(const FString& Message);
+	// image type
+	void SendImage(const TArray<uint8>& ImageData);
+
 	bool CloseTCPListener();
 };
