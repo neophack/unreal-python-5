@@ -20,6 +20,12 @@ ATCPServer::ATCPServer()
 void ATCPServer::BeginPlay()
 {
     Super::BeginPlay();
+    ObjectManager = NewObject<UObjectManager>();
+    UWorld* World = GetWorld();
+    if (World) {
+        ObjectManager->InitializeWorld(GetWorld());
+    };
+
     StartTCPListener();
 }
 

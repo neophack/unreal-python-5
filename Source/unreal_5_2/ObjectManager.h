@@ -13,5 +13,12 @@ UCLASS()
 class UNREAL_5_2_API UObjectManager : public UObject
 {
 	GENERATED_BODY()
-	
+
+public:
+	UObjectManager();
+	void InitializeWorld(UWorld* World);
+	void SpawnObject();
+
+private:
+	UWorld* ThisWorld;
 };

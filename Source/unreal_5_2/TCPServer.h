@@ -37,7 +37,7 @@ private:
 	bool bindSocketSuccess;
 	bool CheckForConnections();
 	TUniquePtr<FMessageHandler> MessageHandler;
-
+	UObjectManager* ObjectManager;
 	FString ReceiveData();
 	void SendMessage(const FString& Message);
 	bool CloseTCPListener();

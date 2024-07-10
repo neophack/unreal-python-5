@@ -15,4 +15,5 @@ public:
 
 public:
 	FString ProcessMessage(const FString& Message);
+	FString ParseAndDispatch(TSharedPtr<FJsonObject>& JsonObject);
 };
