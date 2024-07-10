@@ -24,7 +24,9 @@ void ATCPServer::BeginPlay()
     UWorld* World = GetWorld();
     if (World) {
         ObjectManager->InitializeWorld(GetWorld());
+        MessageHandler->AddObjectManager(ObjectManager);
     };
+
 
     StartTCPListener();
 }

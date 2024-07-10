@@ -27,12 +27,17 @@ FString FMessageHandler::ProcessMessage(const FString& Message)
 FString FMessageHandler::ParseAndDispatch(TSharedPtr<FJsonObject>& JsonObject)
 {
     FString Action = JsonObject->GetStringField(TEXT("action"));
-
+    FString message = "Nothing happened";
     if (Action == TEXT("add_object"))
     {
-        //UnrealEngineActions->SpawnObject(World, JsonObject);
+        // TODO: check correct format
+        message = ObjectManager->SpawnObject(JsonObject);
     }
-
     // ToDo: More info
-    return Action;
+    return message;
+};
+
+void FMessageHandler::AddObjectManager(UObjectManager* Manager)
+{
+    ObjectManager = Manager;
 }

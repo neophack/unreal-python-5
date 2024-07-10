@@ -17,7 +17,7 @@ class UNREAL_5_2_API UObjectManager : public UObject
 public:
 	UObjectManager();
 	void InitializeWorld(UWorld* World);
-	void SpawnObject();
+	FString SpawnObject(TSharedPtr<FJsonObject>& JsonData);
 
 private:
 	UWorld* ThisWorld;

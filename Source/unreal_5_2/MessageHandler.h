@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "ObjectManager.h"
 
 /**
  * 
@@ -14,6 +15,13 @@ public:
 	~FMessageHandler();
 
 public:
+	void AddObjectManager(UObjectManager* manager);
 	FString ProcessMessage(const FString& Message);
+
+private:
+	UObjectManager* ObjectManager;
+
+	bool ValidateJsonData(TSharedPtr<FJsonObject>& JsonData, FString& ErrorMessage);
 	FString ParseAndDispatch(TSharedPtr<FJsonObject>& JsonObject);
+
 };
