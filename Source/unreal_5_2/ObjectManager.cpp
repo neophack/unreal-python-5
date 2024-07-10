@@ -2,6 +2,7 @@
 
 
 #include "ObjectManager.h"
+#include "SpawnedObject.h"
 
 int32 UObjectManager::ObjectCounter = 1;
 
@@ -30,7 +31,9 @@ FString UObjectManager::SpawnObject(TSharedPtr<FJsonObject>& JsonData)
 
     FActorSpawnParameters SpawnParams;
 
-    AActor* SpawnedActor = ThisWorld->SpawnActor<AActor>(AActor::StaticClass(), Location, Rotation, SpawnParams);
+    ASpawnedObject* SpawnedActor = ThisWorld->SpawnActor<ASpawnedObject>(ASpawnedObject::StaticClass(), Location, Rotation, SpawnParams);
+    FVector SpawnedLocation = SpawnedActor->GetActorLocation();
+    UE_LOG(LogTemp, Log, TEXT("Spawned actor %s at location: %s"), *SpawnedActor->GetName(), *SpawnedLocation.ToString());
 
     FString MaterialPath = JsonData->GetStringField(TEXT("material_path"));
     FString MeshPath = JsonData->GetStringField(TEXT("mesh_path"));

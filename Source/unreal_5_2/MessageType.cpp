@@ -3,13 +3,13 @@
 
 #include "MessageType.h"
 
-MessageType::MessageType()
-{
-}
-
-MessageType::~MessageType()
-{
-}
+//MessageType::MessageType()
+//{
+//}
+//
+//MessageType::~MessageType()
+//{
+//}
 
 Msg MessageType::StringToMsg(const FString& Message)
 {

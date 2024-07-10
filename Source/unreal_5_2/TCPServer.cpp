@@ -27,7 +27,6 @@ void ATCPServer::BeginPlay()
         MessageHandler->AddObjectManager(ObjectManager);
     };
 
-
     StartTCPListener();
 }
 
@@ -38,8 +37,6 @@ void ATCPServer::Tick(float DeltaTime)
     bool connected = CheckForConnections();
     FString ReceivedMessage = ReceiveData();
     if (!ReceivedMessage.IsEmpty()) {
-        UE_LOG(LogServer, Log, TEXT("Received from client: %s"), *ReceivedMessage);
-        // TODO: use template<typename T> to send FString or TArray (camera view)
         Msg DispatchMessage = MessageHandler->ProcessMessage(ReceivedMessage);
         SendMessage(DispatchMessage);
     }

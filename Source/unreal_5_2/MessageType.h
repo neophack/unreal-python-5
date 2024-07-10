@@ -9,9 +9,9 @@ typedef TVariant<FString, TArray<uint8>> Msg;
 
 class UNREAL_5_2_API MessageType
 {
-public:
-	MessageType();
-	~MessageType();
+//public:
+//	MessageType();
+//	~MessageType();
 public:
 	static Msg StringToMsg(const FString& Message);
     static Msg TArrayToMsg(const TArray<uint8>& Data);
