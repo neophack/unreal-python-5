@@ -43,9 +43,7 @@ private:
 
 	// robust type
 	void SendMessage(const Msg& Message);
-	// string type
-	void SendMessage(const FString& Message);
-	// image type
+	void SendText(const FString& Message);
 	void SendImage(const TArray<uint8>& ImageData);
 
 	bool CloseTCPListener();

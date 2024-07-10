@@ -3,14 +3,6 @@
 
 #include "MessageType.h"
 
-//MessageType::MessageType()
-//{
-//}
-//
-//MessageType::~MessageType()
-//{
-//}
-
 Msg MessageType::StringToMsg(const FString& Message)
 {
     return Msg(TInPlaceType<FString>(), Message);

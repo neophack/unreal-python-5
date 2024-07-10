@@ -6,10 +6,6 @@
 
 int32 UObjectManager::ObjectCounter = 1;
 
-UObjectManager::UObjectManager()
-{
-};
-
 void UObjectManager::InitializeWorld(UWorld* World)
 {
 	ThisWorld = World;

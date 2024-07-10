@@ -148,7 +148,7 @@ FString ATCPServer::ReceiveData()
     return FString();
 }
 
-void ATCPServer::SendMessage(const FString& Message)
+void ATCPServer::SendText(const FString& Message)
 {
     if (ClientSocket && ClientSocket->GetConnectionState() == SCS_Connected)
     {
@@ -208,7 +208,7 @@ void ATCPServer::SendMessage(const Msg& Message)
     {
         if (Message.IsType<FString>())
         {
-            SendMessage(Message.Get<FString>());
+            SendText(Message.Get<FString>());
         }
         else if (Message.IsType<TArray<uint8>>())
         {

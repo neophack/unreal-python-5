@@ -6,16 +6,13 @@
 #include "UObject/NoExportTypes.h"
 #include "ObjectManager.generated.h"
 
-/**
- * 
- */
+
 UCLASS()
 class UNREAL_5_2_API UObjectManager : public UObject
 {
 	GENERATED_BODY()
 
 public:
-	UObjectManager();
 	void InitializeWorld(UWorld* World);
 	FString SpawnObject(TSharedPtr<FJsonObject>& JsonData);
 	FString DeleteObject(TSharedPtr<FJsonObject>& JsonData);
